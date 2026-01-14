@@ -6,7 +6,8 @@ use crate::binary::*;
 /// A core implementation of this library.
 /// <br>
 /// 
-/// For instanciating, use `Redactor::from(&File)`.
+/// For instanciating, use `Redactor::from(&File)`:
+/// 
 /// ```rs
 /// use std::fs::File;
 /// use redactor::Redactor;
