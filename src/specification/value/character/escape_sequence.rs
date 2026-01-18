@@ -1,50 +1,72 @@
 /// Checks if the given byte slice represents a valid escape sequence
 /// in a PDF literal string.
-pub fn is_valid_escape_sequence_bytes(bytes: &[u8]) -> bool {
+pub fn validate_escape_sequence_bytes(bytes: &[u8]) -> Result<(), String> {
 
-    // Must be between one and three bytes long
-    if !matches!(bytes.len(), 1..=3) {
-
-        return false;
+    if !matches!(bytes.len(), 1..=4) {
+        return Err(format!("Invalid escape sequence length: {}", bytes.len()));
     }
 
-    // Must start with a backslash
+    if matches!(bytes, b"\\" | b"\\n" | b"\\r" | b"\\t" | b"\\b" | b"\\f" | b"\\(" | b"\\)" | b"\\\\" | b"\\\r\n") {
+        return Ok(());
+    }
+
     if bytes[0] != b'\\' {
-
-        return false;
+        return Err(format!("Escape sequence must start with backslash: {:?}", bytes));
     }
 
-    // If it's two bytes long, the second byte must be a valid escape character
-    if bytes.len() == 2 {
-        
-        if !matches!(
-            bytes[1],
-            b'n'
-            | b'r'
-            | b't'
-            | b'b'
-            | b'f'
-            | b'('
-            | b')'
-            | b'\r'
-            | b'\n'
-            | b'\\') {
+    let may_be_digits = &bytes[1..];
 
-            return false;
+    if !may_be_digits.iter().all(|&b| b.is_ascii_digit()) {
+        return Err(format!("Escape sequence contains non-digit characters: {:?}", bytes));
+    }
+
+    Ok(())
+}
+
+#[cfg(test)]
+mod tests {
+
+    use crate::specification::value::character::escape_sequence::validate_escape_sequence_bytes;
+
+    #[test]
+    fn should_validate_escape_sequences() {
+
+        let valid_sequences: &[&[u8]] = &[
+            b"\\n",
+            b"\\r",
+            b"\\t",
+            b"\\b",
+            b"\\f",
+            b"\\(",
+            b"\\)",
+            b"\\\\",
+            b"\\\r\n",
+            b"\\123",
+            b"\\0",
+            b"\\12",
+        ];
+
+        for (index, seq) in valid_sequences.iter().enumerate() {
+
+            assert!(validate_escape_sequence_bytes(seq).is_ok(), "Expected valid: {:?} at index {}", seq, index);
         }
     }
 
-    // If it's not a end-of-line escape sequence, all following bytes must be digits
-    if bytes != b"\\\r\n" {
-        
-        for byte in bytes.iter().skip(1) {
-    
-            if !byte.is_ascii_digit() {
+    #[test]
+    fn should_invalidate_escape_sequences() {
 
-                return false;
-            }
+        let invalid_sequences: &[&[u8]] = &[
+            b"",
+            b"\\x",
+            b"\\a",
+            b"\\1234",
+            b"\\1a",
+            b"abc",
+            b"\\ \r\n",
+        ];
+
+        for (index, seq) in invalid_sequences.iter().enumerate() {
+            assert!(validate_escape_sequence_bytes(seq).is_err(), "Expected invalid: {:?} at index {}", seq, index);
         }
     }
-
-    true
 }
