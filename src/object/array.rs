@@ -67,7 +67,7 @@ mod tests {
                 LiteralChar::Ascii(Ascii::new(b'C')),
                 LiteralChar::EscapeSequence(EscapeSequence::Tab),
                 LiteralChar::Ascii(Ascii::new(b'D')),
-                LiteralChar::EscapeSequence(EscapeSequence::EndOfLineCR)
+                LiteralChar::EscapeSequence(EscapeSequence::EndOfLine)
             ])),
             Object::HexadecimalString(HexadecimalString::new(vec![
                 HexadecimalChar::new(b"4A"),
@@ -92,7 +92,7 @@ mod tests {
 
         assert_eq!(
             array.as_bytes(),
-            b"[42 true /TestName null 3.14 (ABC\\tD\r) <4A6F686E> [1 2 3 [76 (F\\)\\r)]]]"
+            b"[42 true /TestName null 3.14 (ABC\\tD\n) <4A6F686E> [1 2 3 [76 (F\\)\\r)]]]"
         );
     }
 }

@@ -25,12 +25,11 @@ pub enum EscapeSequence {
     CharacterCode(CharacterCode),
     /// Backslash only escape sequence (`\`).
     Empty,
-    /// End of line escape sequence (`\<CR>`).
-    EndOfLineCR,
     /// End of line escape sequence (`\<LF>`).
-    EndOfLineLF,
-    /// End of line escape sequence (`\<CR><LF>`).
-    EndOfLineCRLF,
+    /// 
+    /// A Line Feed (`\n`) or Carriage Return (`\r`) immediately
+    /// following a backslash (`\`) is treated as a just Line Feed.
+    EndOfLine,
 }
 
 impl EscapeSequence {
@@ -48,9 +47,7 @@ impl EscapeSequence {
             EscapeSequence::Backslash => br"\\",
             EscapeSequence::CharacterCode(code) => code.as_bytes(),
             EscapeSequence::Empty => br"\",
-            EscapeSequence::EndOfLineCR => b"\r",
-            EscapeSequence::EndOfLineLF => b"\n",
-            EscapeSequence::EndOfLineCRLF => b"\r\n",
+            EscapeSequence::EndOfLine => b"\n",
         }
     }
 }
