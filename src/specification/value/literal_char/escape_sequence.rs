@@ -26,7 +26,7 @@ pub fn validate_escape_sequence_bytes(bytes: &[u8]) -> Result<(), String> {
 #[cfg(test)]
 mod tests {
 
-    use crate::specification::value::character::escape_sequence::validate_escape_sequence_bytes;
+    use crate::specification::value::literal_char::escape_sequence::validate_escape_sequence_bytes;
 
     #[test]
     fn should_validate_escape_sequences() {

@@ -1,18 +1,18 @@
-use crate::value::LiteralCharacter;
+use crate::value::LiteralChar;
 
 /// PDF Literal String representation.
 #[derive(Debug, Clone)]
-pub struct LiteralString(Vec<LiteralCharacter>);
+pub struct LiteralString(Vec<LiteralChar>);
 
 impl LiteralString {
     
     /// Creates a new `LiteralString` from the given vector of `LiteralCharacter`.
-    pub fn new(characters: Vec<LiteralCharacter>) -> Self {
+    pub fn new(characters: Vec<LiteralChar>) -> Self {
         Self(characters)
     }
 
     /// Returns the characters of the Literal String.
-    pub fn characters(&self) -> &[LiteralCharacter] {
+    pub fn characters(&self) -> &[LiteralChar] {
         &self.0
     }
 

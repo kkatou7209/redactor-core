@@ -1,4 +1,4 @@
-use crate::specification::value::character::escape_sequence::validate_escape_sequence_bytes;
+use crate::specification::value::literal_char::escape_sequence::validate_escape_sequence_bytes;
 
 /// PDF Character Code representation.
 #[derive(Debug, Clone)]
