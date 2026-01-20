@@ -1,7 +1,7 @@
 use crate::specification::object::name::validate_name_bytes;
 
 /// PDF Name object representation.
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct Name {
     /// The bytes of the name.
     bytes: Vec<u8>,

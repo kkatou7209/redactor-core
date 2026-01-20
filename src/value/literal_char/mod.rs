@@ -5,7 +5,7 @@ pub use ascii::Ascii;
 pub use escape_sequence::EscapeSequence;
 
 /// PDF Literal string character representation.
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, PartialEq, Eq)]
 pub enum LiteralChar {
     /// PDF ASCII character representation.
     Ascii(Ascii),

@@ -3,7 +3,7 @@ mod character_code;
 use character_code::CharacterCode;
 
 /// PDF escape sequence representation.
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, PartialEq, Eq)]
 pub enum EscapeSequence {
     /// Line feed escape sequence (`\n`).
     LineFeed,

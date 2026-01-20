@@ -1,7 +1,7 @@
 use crate::value::LiteralChar;
 
 /// PDF Literal String representation.
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, PartialEq, Eq)]
 pub struct LiteralString {
     chars: Vec<LiteralChar>,
     bytes: Vec<u8>,

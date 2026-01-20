@@ -1,7 +1,7 @@
 use crate::object::Object;
 
 /// A PDF Array object.
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, PartialEq, Eq)]
 pub struct Array {
     objects: Vec<Object>,
     bytes: Vec<u8>,
@@ -43,6 +43,7 @@ impl Array {
 
 #[cfg(test)]
 mod tests {
+    use crate::object::dicionary::DicionaryEntry;
     use crate::object::{HexadecimalString, LiteralString, Object};
     use crate::object::integer::Integer;
     use crate::object::boolean::Boolean;
@@ -69,6 +70,19 @@ mod tests {
                 LiteralChar::Ascii(Ascii::new(b'D')),
                 LiteralChar::EscapeSequence(EscapeSequence::EndOfLine)
             ])),
+            Object::Dicionary(crate::object::dicionary::Dicionary::new(vec![
+                DicionaryEntry {
+                    key: Name::new(b"/Elements").unwrap(),
+                    value: Object::Array(Array::new(vec![
+                        Object::Integer(Integer::new(b"0").unwrap()),
+                        Object::Real(Real::new(b"-0.4").unwrap())
+                    ])),
+                },
+                DicionaryEntry {
+                    key: Name::new(b"/Count").unwrap(),
+                    value: Object::Integer(Integer::new(b"+2").unwrap()),
+                },
+            ])), // Empty dictionary for simplicity
             Object::HexadecimalString(HexadecimalString::new(vec![
                 HexadecimalChar::new(b"4A"),
                 HexadecimalChar::new(b"6F"),
@@ -92,7 +106,7 @@ mod tests {
 
         assert_eq!(
             array.as_bytes(),
-            b"[42 true /TestName null 3.14 (ABC\\tD\n) <4A6F686E> [1 2 3 [76 (F\\)\\r)]]]"
+            b"[42 true /TestName null 3.14 (ABC\\tD\n) <</Elements [0 -0.4] /Count +2>> <4A6F686E> [1 2 3 [76 (F\\)\\r)]]]"
         );
     }
 }

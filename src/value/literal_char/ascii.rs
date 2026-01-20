@@ -1,5 +1,5 @@
 /// A PDF ASCII character representation.
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, PartialEq, Eq)]
 pub struct Ascii(Vec<u8>);
 
 impl Ascii {
