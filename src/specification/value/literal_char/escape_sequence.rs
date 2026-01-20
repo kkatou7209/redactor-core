@@ -23,6 +23,27 @@ pub fn validate_escape_sequence_bytes(bytes: &[u8]) -> Result<(), String> {
     Ok(())
 }
 
+/// Validates if the given byte slice represents a valid
+/// escaped character code in a PDF literal string.
+pub fn validate_escaped_char_code(bytes: &[u8]) -> Result<(), String> {
+
+    if !matches!(bytes.len(), 2..=4) {
+        return Err(format!("Invalid escaped character code length: {}", bytes.len()));
+    }
+
+    if bytes[0] != b'\\' {
+        return Err(format!("Escaped character code must start with backslash: {:?}", bytes));
+    }
+
+    let digit_bytes = &bytes[1..];
+
+    if !digit_bytes.iter().all(|&b| b.is_ascii_digit()) {
+        return Err(format!("Escaped character code contains non-digit characters: {:?}", bytes));
+    }
+
+    Ok(())
+}
+
 #[cfg(test)]
 mod tests {
 
