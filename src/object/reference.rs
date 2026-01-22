@@ -23,15 +23,15 @@ impl Reference {
     }
 
     /// Returns the number of the Indirect Reference.
-    pub fn number(&self) -> &u32 {
+    pub fn number(&self) -> u32 {
         
-        &self.number
+        self.number
     }
 
     /// Returns the generation of the Indirect Reference.
-    pub fn generation(&self) -> &u32 {
+    pub fn generation(&self) -> u32 {
         
-        &self.generation
+        self.generation
     }
 }
 
