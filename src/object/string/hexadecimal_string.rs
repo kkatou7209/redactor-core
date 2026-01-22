@@ -33,4 +33,10 @@ impl HexadecimalChar {
 
         Self(char)
     }
+
+    /// Returns the character byte.
+    pub fn as_byte(&self) -> u8 {
+
+        self.0
+    }
 }
