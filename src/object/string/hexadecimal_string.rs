@@ -1,5 +1,3 @@
-use crate::value::HexadecimalChar;
-
 /// PDF Hexadecimal String representation (i.e `<4A6F686E>`).
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct HexadecimalString {
@@ -21,5 +19,18 @@ impl HexadecimalString {
     pub fn chars(&self) -> &[HexadecimalChar] {
         
         &self.chars
+    }
+}
+
+/// PDF Hexadecimal string character representation.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct HexadecimalChar(u8);
+
+impl HexadecimalChar {
+    
+    /// Creates a new `HexadecimalChar` character sequence from a byte vector.
+    pub fn new(char: u8) -> Self {
+
+        Self(char)
     }
 }

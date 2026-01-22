@@ -1,22 +1,20 @@
 mod array;
 mod boolean;
 mod dicionary;
-mod hexadecimal_string;
 mod integer;
-mod literal_string;
 mod name;
 mod null;
 mod object;
 mod real;
 mod reference;
 mod stream;
+mod string;
 
 pub use array::{Array, ArrayElement};
 pub use boolean::Boolean;
 pub use dicionary::{Dicionary, DicionaryEntry, DictionaryValue};
-pub use hexadecimal_string::HexadecimalString;
+pub use string::{HexadecimalString, LiteralString};
 pub use integer::Integer;
-pub use literal_string::LiteralString;
 pub use name::Name;
 pub use null::Null;
 pub use real::Real;

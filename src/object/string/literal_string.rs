@@ -1,4 +1,4 @@
-use crate::value::LiteralChar;
+use crate::object::string::{Ascii, EscapeSequence};
 
 /// PDF Literal String representation.
 #[derive(Debug, Clone, PartialEq, Eq)]
@@ -22,4 +22,13 @@ impl LiteralString {
         
         &self.chars
     }
+}
+
+/// PDF Literal string character representation.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub enum LiteralChar {
+    /// PDF ASCII character representation.
+    Ascii(Ascii),
+    /// PDF Escape Sequence character representation.
+    EscapeSequence(EscapeSequence),
 }
