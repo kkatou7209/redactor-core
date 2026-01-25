@@ -1,11 +1,9 @@
 /// A PDF Real object representation.
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct Real {
-    value: i128,
-    padding: i64,
+    /// The string representation of the real number.
+    value: String,
 }
-
-pub const REAL_MAX_DIGITS: i64 = 15;
 
 impl Real {
     
@@ -16,20 +14,32 @@ impl Real {
             return Err(format!("Invalid real number: value = {:?}", value));
         }
 
-        let str = format!("{}", value.abs());
+        let value = format!("{}", value);
 
-        let digit = str.len() as i64;
-
-        let padding = ((REAL_MAX_DIGITS - digit) * 10_i64) as f64;
-
-        let value = (value * padding) as i128;
-
-        Ok(Self { value, padding: padding as i64 })
+        Ok(Self { value, })
     }
 
     /// Returns the value of the Real as f64.
     pub fn as_f64(&self) -> f64 {
 
-        self.value as f64 / self.padding as f64
+        self.value.parse::<f64>().unwrap()
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::Real;
+
+    #[test]
+    fn should_returns_valid_value() {
+
+        let real = Real::new(3.14159).unwrap();
+        assert_eq!(real.as_f64(), 3.14159);
+
+        let real = Real::new(-0.001).unwrap();
+        assert_eq!(real.as_f64(), -0.001);
+
+        let real = Real::new(0.0000000001).unwrap();
+        assert_eq!(real.as_f64(), 0.0000000001);
     }
 }

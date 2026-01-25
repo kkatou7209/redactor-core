@@ -8,6 +8,8 @@ pub use length::Length;
 
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct Stream {
+    /// Stream dictionary
     dictionary: StreamDictionary,
+    /// Stream content
     content: Vec<u8>,
 }
